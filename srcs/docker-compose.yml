@@ -1,0 +1,61 @@
+version: '3'
+
+service:
+    nginx:
+        container_name: nginx
+
+        build: 
+            context: ./requirements/nginx
+        
+        image: nginx
+        
+        networks:
+            - docker_network
+        
+        ports:
+            - "443:443"
+        
+        volume:
+            - wp_data:/var/www/html
+        
+        restart: always
+    #mysql:
+    #    container_name: mariadb
+    #    image: mariadb:v_final
+    #    volume:
+    #        -db_data:/var/lib/mysql
+    #    env_file:
+    #        - .env
+    #    restart: always
+    #wordpress:
+    #    container_name: wordpress
+    #    image: wordpress:php7.3-fpm-alpine
+    #    volumes:
+    #        - wp_data:/var/www/html
+    #    depends_on:
+    #        - mysql
+    #    evironement:
+    #        - MYSQL__HOSTNAME=${MYSQL_HOSTNAME}
+    #        - MYSQL_USER=${MYSQL_USER}
+    #        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    #        - MYSQL_DATABASE=${MYSQL_DATABASE}
+    #        - WP_PREFIX=wp_
+    #    links:
+    #        - mysql
+    #    restart: always
+networks:
+    docker_network:
+
+volumes:
+    #db_data:
+    #    driver: local
+    #    driver_opts:
+    #        type: volume
+    #        o : bind
+    #        device : /home/jdamoise/data/mysql
+    wp_data:
+        driver: local
+        driver_opts:
+            type: volume
+            o : bind
+            device : /home/jdamoise/data/wordpress

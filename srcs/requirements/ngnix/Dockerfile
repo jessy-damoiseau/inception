@@ -1,10 +1,11 @@
-FROM debian:buster
+FROM alpine:3.13
 
-RUN apt-get -qq update && apt-get -qq -y install nginx openssl vim
+RUN apk update && apk add --no-cachee -y nginx openssl vim
 
-RUN openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/jdamoise.42.fr.key -x509 -days 365 -out /etc/ssl/jdamoise.42.fr.ctf;
+RUN     openssl req -x509 -nodes -out /etc/nginx/ssl/jdamoise.42.fr.ctf -keyout /etc/nginx/ssl/jdamoise.42.fr.key \
+        -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=jdamoise.42.fr/UID=jdamoise"
 
-COPY conf/nginx.conf /etc/nginx/conf.d
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 443
 
