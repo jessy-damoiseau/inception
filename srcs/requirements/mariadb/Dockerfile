@@ -2,7 +2,7 @@ FROM alpine:3.14
 
 RUN apk update
 
-RUN apk --no-cache --quiet --update mariadb mariadb-client vim
+RUN apk add --no-cache --quiet --update mariadb mariadb-client vim
 
 EXPOSE 3306
 
