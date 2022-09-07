@@ -15,37 +15,37 @@ services:
         ports:
             - "443:443"
         volumes:
-            - wp_data:/var/www/html
+            - wp_data:/var/www/wordpress
+        restart: unless-stopped
+    mariadb:
+        container_name: mariadb
+        build:
+            context: ./requirements/mariadb
+        image: mariadb
+        volumes:
+            - db_data:/var/lib/mysql
+        networks: 
+            - docker_network
+        env_file:
+            - .env
         restart: always
-    #mysql:
-    #    container_name: mariadb
-    #    image: mariadb:v_final
-    #    volumes:
-    #        -db_data:/var/lib/mysql
-    #    env_file:
-    #        - .env
-    #    restart: always
     #wordpress:
     #    container_name: wordpress
     #    image: wordpress:php7.3-fpm-alpine
     #    volumes:
-    #        - wp_data:/var/www/html
+    #        - wp_data:/var/www/wordpress
     #    depends_on:
     #        - mysql
     #    env_file:
     #        .env
-    #    links:
-    #        - mysql
     #    restart: always
-
-
 volumes:
-    #db_data:
-    #    driver: local
-    #    driver_opts:
-    #        type: volume
-    #        o : bind
-    #        device : /home/jdamoise/data/mysql
+    db_data:
+        driver: local
+        driver_opts:
+            type: volume
+            o : bind
+            device : /home/jdamoise/data/mariadb
     wp_data:
         driver: local
         driver_opts:
