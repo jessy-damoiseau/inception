@@ -17,6 +17,7 @@ services:
         volumes:
             - wp_data:/var/www/wordpress
         restart: unless-stopped
+
     mariadb:
         container_name: mariadb
         build:
