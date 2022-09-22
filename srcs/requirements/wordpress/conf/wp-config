@@ -1,3 +1,4 @@
+<?php
 define('WP_CACHE', true);
 
 define('DB_NAME, getenv('MYSQL_DATABASE'));
@@ -5,7 +6,7 @@ define('DB_USER', getenv('MYSQL_USER'));
 define('DB_PASSWORD', getenv('MYSQL_PASSWORD'));
 define('DB_HOST', getenv('MYSQL_HOSTNAME'));
 define('DB_CHARSET', 'utf8');
-define('DB_COLLATE','');
+define('DB_COLLATE', '');
 
 define('AUTH_KEY',         '`Z|W;?(va[x%6a-|4*!AY|nw1&3$ryEXBR7uunzF*4-A|-2|u>gZSiEN-d,^[-Oz');
 define('SECURE_AUTH_KEY',  'N|r52G`+`Q|75E+bE{@bZQH+y~++/V=~76ZbR-+q?wP-PL}wy|RJP;in9((3-ps{');

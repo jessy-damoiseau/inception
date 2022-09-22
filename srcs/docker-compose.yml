@@ -27,9 +27,10 @@ services:
             - db_data:/var/lib/mysql
         networks: 
             - docker_network
-        env_file:
-            - .env
+        env_file: 
+            .env
         restart: unless-stopped
+
     wordpress:
         container_name: wordpress
         image: wordpress
@@ -39,6 +40,8 @@ services:
             - wp_data:/var/www/wordpress
         depends_on:
             - mariadb
+        networks:
+            - docker_network
         env_file:
             .env
         restart: unless-stopped
