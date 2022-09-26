@@ -1,60 +1,60 @@
 version: '3'
 
+volumes:
+  mariadb-volume:
+    driver: local
+    driver_opts:
+      device: /home/jdamoise/data/database
+      type: volume
+      o: bind
+  wordpress-volume:
+    driver: local
+    driver_opts:
+      device: /home/jdamoise/data/wordpress
+      type: volume
+      o: bind
+
 networks:
-    docker_network:
+  docker-network:
 
 services:
-    
-    nginx:
-        container_name: nginx
-        build: 
-            context: ./requirements/nginx
-        image: nginx
-        networks:
-            - docker_network
-        ports:
-            - "443:443"
-        volumes:
-            - wp_data:/var/www/wordpress
-        restart: unless-stopped
+  nginx:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+    image: nginx
+    volumes:
+      - wordpress-volume:/var/www/wordpress
+    networks:
+      - docker-network
+    ports:
+      - "443:443"
+    restart: unless-stopped
 
-    mariadb:
-        container_name: mariadb
-        build:
-            context: ./requirements/mariadb
-        image: mariadb
-        volumes:
-            - db_data:/var/lib/mysql
-        networks: 
-            - docker_network
-        env_file: 
-            .env
-        restart: unless-stopped
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - mariadb-volume:/var/lib/mysql
+    networks:
+      - docker-network
+    env_file: 
+      - .env
+    restart: unless-stopped
 
-    wordpress:
-        container_name: wordpress
-        image: wordpress
-        build:
-            context: ./requirements/wordpress
-        volumes:
-            - wp_data:/var/www/wordpress
-        depends_on:
-            - mariadb
-        networks:
-            - docker_network
-        env_file:
-            .env
-        restart: unless-stopped
-volumes:
-    db_data:
-        driver: local
-        driver_opts:
-            type: volume
-            o : bind
-            device : /home/jdamoise/data/mariadb
-    wp_data:
-        driver: local
-        driver_opts:
-            type: volume
-            o : bind
-            device : /home/jdamoise/data/wordpress
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+    image: wordpress
+    volumes:
+      - wordpress-volume:/var/www/wordpress
+    networks:
+      - docker-network
+    env_file: 
+      - .env
+    restart: unless-stopped

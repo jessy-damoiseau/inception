@@ -1,7 +1,7 @@
 cat .setup 2> /dev/null
-if [$? -ne 0]; then
+if [ $? -ne 0 ]; then
 	usr/bin/mysqld_safe --datadir=/var/lib/mysql &
-	while ! mysqladmin ping -h "$MYSQL_HOSTNAME" --silent; do
+	while ! mysqladmin ping -h "$MARIADB_HOST" --silent; do
     	sleep 1
 	done
 

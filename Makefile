@@ -6,9 +6,6 @@ all        :
 			$(COMPOSE) build
 			mkdir -p /home/jdamoise/data/wordpress
 			mkdir -p /home/jdamoise/data/mariadb
-			sudo chmod 666 /etc/hosts
-			sudo echo "127.0.0.1 jdamoise.42.fr" >> /etc/hosts
-			sudo echo "127.0.0.1 www.jdamoise.42.fr" >> /etc/hosts
 			$(COMPOSE) up -d
 
 bonus:        fclean
@@ -31,7 +28,7 @@ clean    :
 
 fclean    :    clean
 			docker system prune --volumes --all --force
-			sudo rm -rf /home/bmaudet/data
+			sudo rm -rf /home/jdamoise/data
 			docker network prune --force
 			docker image prune --force
 
