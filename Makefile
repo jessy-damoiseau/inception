@@ -5,7 +5,7 @@ all        :
 			sudo service mysql stop
 			$(COMPOSE) build
 			mkdir -p /home/jdamoise/data/wordpress
-			mkdir -p /home/jdamoise/data/mariadb
+			mkdir -p /home/jdamoise/data/database
 			$(COMPOSE) up -d
 
 bonus:        fclean
